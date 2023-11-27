@@ -26,7 +26,7 @@ docker run -d \
     --env S3_BACKUP=yes \
     --volume host.folder:/backup \
     --name mongodb-sync \
-    rysenko/mongodb-sync
+    ghcr.io/functionaldude/mongodb-sync:master
 ```
 
 Moreover, if you link `agaveapi/mongodb-sync` to a mongodb container(e.g. `tutum/mongodb`) with an alias named mongodb-backup, this image will try to auto load the source `host`, `port`, `user`, `pass` if possible. The same is true if you link `agaveapi/mongodb-sync` to a mongodb container(e.g. `tutum/mongodb`) with an alias named mongodb-restore, this image will try to auto load the destination `host`, `port`, `user`, `pass` if possible.
@@ -34,7 +34,7 @@ Moreover, if you link `agaveapi/mongodb-sync` to a mongodb container(e.g. `tutum
 ```
 docker run -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="mypass" --name mongodb-backup tutum/mongodb
 docker run -d -p 37017:27017 -p 38017:28017 -e MONGODB_PASS="mypass" --name mongodb-restore tutum/mongodb
-docker run -d --link mongodb-backup:mongodb-backup --link mongodb-restore:mongodb-restore -v host.folder:/backup rysenko/mongodb-sync
+docker run -d --link mongodb-backup:mongodb-backup --link mongodb-restore:mongodb-restore -v host.folder:/backup ghcr.io/functionaldude/mongodb-sync:master
 ```
 
 ## Parameters
@@ -78,7 +78,7 @@ docker run -d \
     --env MONGODB_BACKUP_PASS=password \
     --volume host.folder:/backup \
     --name mongodb-sync \
-    rysenko/mongodb-sync backup
+    ghcr.io/functionaldude/mongodb-sync:master backup
 ```
 
 To archive copies of the the backups to S3:
@@ -97,7 +97,7 @@ docker run -d \
     --env S3_BACKUP=yes \
     --volume host.folder:/backup \
     --name mongodb-sync \
-    rysenko/mongodb-sync backup
+    ghcr.io/functionaldude/mongodb-sync:master backup
 ```
 
 ## Restore from a backup
@@ -117,7 +117,7 @@ docker run -it --rm \
     --env MONGODB_RESTORE_USER=admin \
     --env MONGODB_RESTORE_PASS=password \
     --volume /existing/local/backup/folder:/backup \
-    rysenko/mongodb-sync /restore.sh /backup/2015.08.06.171901
+    ghcr.io/functionaldude/mongodb-sync:master /restore.sh /backup/2015.08.06.171901
 ```
 
 ## Run as a one-off sync process
@@ -134,7 +134,7 @@ docker run -d --rm \
     --env MONGODB_RESTORE_PORT=27017 \
     --env MONGODB_RESTORE_USER=admin \
     --env MONGODB_RESTORE_PASS=password \
-    rysenko/mongodb-sync /sync.sh
+    ghcr.io/functionaldude/mongodb-sync:master /sync.sh
 ```
 
 If your existing mongo images are already running in containers, you can do the following:
@@ -143,5 +143,5 @@ If your existing mongo images are already running in containers, you can do the 
 docker run -d --rm \
     --links mongodb-prod:mongodb-backup \
     --links mongodb-qa:mongodb-restore \
-    rysenko/mongodb-sync /sync.sh
+    ghcr.io/functionaldude/mongodb-sync:master /sync.sh
 ```
