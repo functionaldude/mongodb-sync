@@ -9,6 +9,35 @@ This image may also be used for individual backup and/or restore functionality.
 ## Usage:
 
 ```
+  mongodb-sync:
+    image: ghcr.io/functionaldude/mongodb-sync:master
+    container_name: mongodb-sync
+    restart: unless-stopped
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+    - MONGODB_BACKUP_HOST=mongodb.backup.host
+    - MONGODB_BACKUP_PORT=27017
+    - MONGODB_BACKUP_USER=root
+    - MONGODB_BACKUP_PASS=<secret>
+    - MONGODB_BACKUP_DB=main-db
+    - MONGODB_RESTORE_HOST=mongodb.restore.host
+    - MONGODB_RESTORE_PORT=27017
+    - MONGODB_RESTORE_USER=root
+    - MONGODB_RESTORE_PASS=<secret>
+    - MONGODB_RESTORE_DB=main-db
+    - EXTRA_RESTORE_OPTS=--authenticationDatabase=admin --numParallelCollections=1
+    - CRON_TIME=0 0 * * *
+    - MAX_BACKUPS=30
+    - INIT_RESTORE=true
+    volumes:
+      - host.folder:/backup
+```
+
+or
+
+```
 docker run -d \
     --env MONGODB_BACKUP_HOST=mongodb.backup.host \
     --env MONGODB_BACKUP_PORT=27017 \
