@@ -1,8 +1,8 @@
 FROM alpine:edge
 
-RUN apk add --no-cache bash mongodb-tools py-pip && \
-  pip install awscli && \
-  mkdir /backup
+RUN apk add --no-cache bash mongodb-tools py-pip 
+RUN pip install awscli
+RUN mkdir -p /backup
 
 ENV CRON_TIME="0 0 * * *"
 ENV S3_PATH=mongodb
