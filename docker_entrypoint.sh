@@ -38,6 +38,16 @@ elif [[ "${1}" == "restore" ]]; then
 
 elif [[ -z "${1}" || "${1}" == "sync" ]]; then
 
+    if [ -n "${INIT_BACKUP}" ]; then
+        echo "=> Create a backup on the startup"
+        /backup.sh
+    fi
+    
+    if [ -n "${INIT_RESTORE}" ]; then
+        echo "=> Restore a backup on the startup"
+        /restore.sh
+    fi
+    
     if [ -n "${INIT_SYNC}" ]; then
         echo "=> Synchronize on the startup"
         /sync.sh
