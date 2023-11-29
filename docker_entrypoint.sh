@@ -54,7 +54,7 @@ elif [[ -z "${1}" || "${1}" == "sync" ]]; then
     fi
 
     echo "=> Adding sync crontab entry"
-    echo "${CRON_TIME} /backup.sh >> /mongo_sync.log 2>&1" >> /crontab.conf
+    echo "${CRON_TIME} /sync.sh >> /mongo_sync.log 2>&1" >> /crontab.conf
 
     docron
 
